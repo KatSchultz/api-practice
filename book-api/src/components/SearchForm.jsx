@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAuthors } from "../services/books.service";
 import AuthorDisplay from "./AuthorDisplay";
+import Stack from "@mui/material/Stack";
 
 export default function SearchForm() {
   const [authorData, setAuthorData] = useState([]);
@@ -17,10 +18,10 @@ export default function SearchForm() {
     });
   }
   return (
-    <div>
+    <Stack spacing={2}>
       {authorData.map((elem) => (
         <AuthorDisplay data={elem} key={elem.key} />
       ))}
-    </div>
+    </Stack>
   );
 }
