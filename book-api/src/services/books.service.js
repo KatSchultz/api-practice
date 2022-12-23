@@ -7,3 +7,11 @@ export function getAuthors(author) {
       return response;
     });
 }
+
+export function getBook(book) {
+  return axios
+    .get(`https://openlibrary.org/search.json?title=${book}`)
+    .then((response) => {
+      return response;
+    });
+}

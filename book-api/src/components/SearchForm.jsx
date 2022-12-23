@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getAuthors } from "../services/books.service";
+import { getAuthors, getBook } from "../services/books.service";
 import AuthorDisplay from "./AuthorDisplay";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 export default function SearchForm() {
   const [authorData, setAuthorData] = useState([]);
-  const [userInput, setUserInput] = useState({ author: "" });
+  const [author, setAuthor] = useState({ author: "" });
+  const [book, setBook] = useState({ book: "" });
 
   useEffect(() => {
     callAuthor("kurt vonnegut");
@@ -13,25 +15,38 @@ export default function SearchForm() {
 
   function callAuthor(author) {
     getAuthors(author).then((response) => {
-      console.log(response);
       setAuthorData(response.data.docs);
       return response;
     });
   }
 
   function handleInputChange(e) {
-    setUserInput({ author: e.target.value });
+    setAuthor({ author: e.target.value });
   }
 
-  function handleSubmit(e) {
+  function handleBookChange(e) {
+    setBook({ book: e.target.value });
+  }
+
+  function handleAuthorSubmit(e) {
     e.preventDefault();
 
-    callAuthor(userInput.author);
+    callAuthor(author.author);
+  }
+
+  function handleBookSubmit(e) {
+    e.preventDefault();
+    getBook(book).then((response) => {
+      console.log("book: ", book);
+      console.log(response);
+      // setAuthorData(response.data.docs);
+      return response;
+    });
   }
 
   return (
     <div className="search-form">
-      <form action="book-search" onSubmit={handleSubmit}>
+      <form action="book-search" onSubmit={handleAuthorSubmit}>
         <label htmlFor="">Author</label>
         <input
           type="text"
@@ -39,6 +54,13 @@ export default function SearchForm() {
           id="author"
           onChange={handleInputChange}
         />
+        <Button variant="contained" color="secondary">
+          Submit
+        </Button>
+      </form>
+      <form action="book-search" onSubmit={handleBookSubmit}>
+        <label htmlFor="">Title</label>
+        <input type="text" name="book" id="book" onChange={handleBookChange} />
         <button>Submit</button>
       </form>
       <Stack spacing={2}>
