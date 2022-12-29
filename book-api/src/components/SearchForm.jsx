@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAuthors, getBook } from "../services/books.service";
+import { getAuthors, getBookBySubject } from "../services/books.service";
 import AuthorDisplay from "./AuthorDisplay";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 export default function SearchForm() {
   const [authorData, setAuthorData] = useState([]);
   const [author, setAuthor] = useState({ author: "" });
-  const [book, setBook] = useState({ book: "" });
+  const [subject, setSubject] = useState({ subject: "" });
 
   useEffect(() => {
     callAuthor("kurt vonnegut");
@@ -24,8 +24,8 @@ export default function SearchForm() {
     setAuthor({ author: e.target.value });
   }
 
-  function handleBookChange(e) {
-    setBook({ book: e.target.value });
+  function handleSubjectChange(e) {
+    setSubject({ subject: e.target.value });
   }
 
   function handleAuthorSubmit(e) {
@@ -34,12 +34,12 @@ export default function SearchForm() {
     callAuthor(author.author);
   }
 
-  function handleBookSubmit(e) {
+  function handleSubjectSubmit(e) {
     e.preventDefault();
-    getBook(book).then((response) => {
-      console.log("book: ", book);
+    getBookBySubject(subject.subject).then((response) => {
+      console.log("book: ", subject);
       console.log(response);
-      // setAuthorData(response.data.docs);
+      setAuthorData(response.data.works);
       return response;
     });
   }
@@ -58,9 +58,14 @@ export default function SearchForm() {
           Submit
         </Button>
       </form>
-      <form action="book-search" onSubmit={handleBookSubmit}>
-        <label htmlFor="">Title</label>
-        <input type="text" name="book" id="book" onChange={handleBookChange} />
+      <form action="book-search" onSubmit={handleSubjectSubmit}>
+        <label htmlFor="">Subject</label>
+        <input
+          type="text"
+          name="book"
+          id="book"
+          onChange={handleSubjectChange}
+        />
         <button>Submit</button>
       </form>
       <Stack spacing={2}>

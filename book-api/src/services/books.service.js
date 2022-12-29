@@ -8,9 +8,9 @@ export function getAuthors(author) {
     });
 }
 
-export function getBook(book) {
+export function getBookBySubject(subject) {
   return axios
-    .get(`https://openlibrary.org/search.json?title=${book}`)
+    .get(`https://openlibrary.org/subjects/${subject}.json`)
     .then((response) => {
       return response;
     });
