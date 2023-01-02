@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 export default function SearchForm() {
   const [authorData, setAuthorData] = useState([]);
   const [author, setAuthor] = useState({ author: "" });
-  const [subject, setSubject] = useState({ subject: "" });
 
   useEffect(() => {
     callAuthor("kurt vonnegut");
@@ -24,24 +23,10 @@ export default function SearchForm() {
     setAuthor({ author: e.target.value });
   }
 
-  function handleSubjectChange(e) {
-    setSubject({ subject: e.target.value });
-  }
-
   function handleAuthorSubmit(e) {
     e.preventDefault();
 
     callAuthor(author.author);
-  }
-
-  function handleSubjectSubmit(e) {
-    e.preventDefault();
-    getBookBySubject(subject.subject).then((response) => {
-      console.log("book: ", subject);
-      console.log(response);
-      setAuthorData(response.data.works);
-      return response;
-    });
   }
 
   return (
@@ -58,16 +43,7 @@ export default function SearchForm() {
           Submit
         </Button>
       </form>
-      <form action="book-search" onSubmit={handleSubjectSubmit}>
-        <label htmlFor="">Subject</label>
-        <input
-          type="text"
-          name="book"
-          id="book"
-          onChange={handleSubjectChange}
-        />
-        <button>Submit</button>
-      </form>
+
       <Stack spacing={2}>
         {authorData.map((elem) => (
           <AuthorDisplay data={elem} key={elem.key} />
