@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAuthors, getBookBySubject } from "../services/books.service";
+import {
+  getAuthors,
+  getBookBySubject,
+  getAuthors2,
+} from "../services/books.service";
 import AuthorDisplay from "./AuthorDisplay";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -13,10 +17,15 @@ export default function SearchForm() {
   }, []);
 
   function callAuthor(author) {
-    getAuthors(author).then((response) => {
+    const writerData = getAuthors2(author).then((response) => {
       setAuthorData(response.data.docs);
-      return response;
     });
+    // setAuthorData(writerData.data.docs);
+    console.log("writerData: ", writerData);
+    // getAuthors(author).then((response) => {
+    //   setAuthorData(response.data.docs);
+    //   return response;
+    // });
   }
 
   function handleInputChange(e) {
