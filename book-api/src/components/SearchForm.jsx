@@ -7,6 +7,7 @@ import {
 import AuthorDisplay from "./AuthorDisplay";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
 
 export default function SearchForm() {
   const [authorData, setAuthorData] = useState([]);
@@ -18,10 +19,10 @@ export default function SearchForm() {
 
   function callAuthor(author) {
     const writerData = getAuthors2(author).then((response) => {
-      setAuthorData(response.data.docs);
+      setAuthorData(response.data.docs.slice(0, 3));
+      console.log("writerData: ", response.data.docs.slice(0, 3));
     });
     // setAuthorData(writerData.data.docs);
-    console.log("writerData: ", writerData);
     // getAuthors(author).then((response) => {
     //   setAuthorData(response.data.docs);
     //   return response;
@@ -40,19 +41,21 @@ export default function SearchForm() {
 
   return (
     <div className="search-form">
-      <form action="book-search" onSubmit={handleAuthorSubmit}>
-        <label htmlFor="">Author</label>
-        <input
-          type="text"
-          name="author"
-          id="author"
-          onChange={handleInputChange}
-        />
-        <Button variant="contained" color="secondary">
-          Submit
-        </Button>
-      </form>
-
+      <Paper elevation={4} sx={{ marginBottom: "1rem" }}>
+        <form action="book-search" onSubmit={handleAuthorSubmit}>
+          <h2>Search by Author</h2>
+          <label htmlFor="">Author</label>
+          <input
+            type="text"
+            name="author"
+            id="author"
+            onChange={handleInputChange}
+          />
+          <Button variant="contained" color="secondary">
+            Submit
+          </Button>
+        </form>
+      </Paper>
       <Stack spacing={2}>
         {authorData.map((elem) => (
           <AuthorDisplay data={elem} key={elem.key} />
