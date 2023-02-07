@@ -3,11 +3,12 @@ import Paper from "@mui/material/Paper";
 import { singleBookSearch } from "../services/books.service";
 import { useNavigate } from "react-router-dom";
 
-export default function AuthorDisplay({ data }) {
+export default function AuthorDisplay({ data, changeBook }) {
   const navigate = useNavigate();
   function getBookDetails() {
     singleBookSearch(data.top_work).then((response) => {
       console.log(response);
+      changeBook(response.data.docs[0]);
       navigate("/book");
       // console.log(response);
     });

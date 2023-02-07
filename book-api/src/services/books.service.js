@@ -43,3 +43,10 @@ export function getBookBySubject(subject) {
       return response;
     });
 }
+
+export async function getCoverArt(id) {
+  const coverArt = await axios.get(
+    `https://covers.openlibrary.org/b/OLID/${id}-M.jpg`
+  );
+  return coverArt;
+}

@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 
-export default function SearchForm() {
+export default function SearchForm({ changeBook }) {
   const [authorData, setAuthorData] = useState([]);
   const [author, setAuthor] = useState({ author: "" });
 
@@ -58,7 +58,7 @@ export default function SearchForm() {
       </Paper>
       <Stack spacing={2}>
         {authorData.map((elem) => (
-          <AuthorDisplay data={elem} key={elem.key} />
+          <AuthorDisplay data={elem} key={elem.key} changeBook={changeBook} />
         ))}
       </Stack>
     </div>

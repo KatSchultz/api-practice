@@ -23,11 +23,14 @@ function App() {
             element={
               <>
                 <SubjectSearch />
-                <SearchForm />
+                <SearchForm changeBook={changeBook} />
               </>
             }
           ></Route>
-          <Route path="/book" element={<BookDisplay />}></Route>
+          <Route
+            path="/book"
+            element={<BookDisplay book={activeBook} />}
+          ></Route>
         </Routes>
       </Container>
     </div>
